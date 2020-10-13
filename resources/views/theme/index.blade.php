@@ -1,355 +1,193 @@
 @extends('layout.main')
 
 @section('main')
-
-    @if(get_option('enable_slider') == 1 )
-
-        <div class="container-fluid">
+    <div class="modern-top-intoduce-section">
+<br><br><br><br><br><br>
+        <div class="container">
             <div class="row">
-                <div class="">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            {{-- */ $i=0; /* --}}
-                            @foreach($sliders as $slider)
-                                <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}" class="{{ $i==0? 'active':'' }}"></li>
-                                {{-- */ $i++; /* --}}
-                            @endforeach
-                        </ol>
+               
+                   <div class="col-md-12">
+                     <div class="modern-top-hom-cat-section">
 
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            {{-- */ $i=0; /* --}}
-                            @foreach($sliders as $slider)
-                                <div class="item {{ $i==0? 'active':'' }}">
-                                    <img src="{{ slider_url($slider) }}" alt="Image one">
-                                    <div class="carousel-caption">{{ $slider->caption }} </div>
-                                </div>
-                                {{-- */ $i++; /* --}}
-                            @endforeach
+                        <div class="modern-home-search-bar-wrap">
+                            <div class="search-wrapper">
+     <h3>PESSACOIN IS A PLATFORM FOR THE NEXT GENERATION OF INVESTORS THAT WILL SUPPORT FUNDING BINARY ACCOUNTS
+ </h3>  
+
+                            
+                                <a href="{{ route('buy') }}" class="btn btn-info btn-lg"><i class="fa fa-search-plus"></i> Get started</a>
+
+                             
+                            </div>
+
                         </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">@lang('app.previous')</span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">@lang('app.next')</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-
-
-                @if($enable_monetize)
-                    {!! get_option('monetize_code_below_slider') !!}
-                @endif
-
-                <div class="section-header bg-white">
-                    <div class="search-wrapper">
-                        <form class="form-inline" action="{{ route('listing') }}" method="get">
-                            <div class="form-group">
-                                <input type="text"  class="form-control" id="searchTerms" name="q" value="{{ request('q') }}" placeholder="@lang('app.search___')" />
-                            </div>
-
-                            <div class="form-group">
-                                <select class="form-control select2" name="sub_category">
-                                    <option value="">@lang('app.select_a_category')</option>
-                                    @foreach($top_categories as $category)
-                                        @if($category->sub_categories->count() > 0)
-                                            <optgroup label="{{ $category->category_name }}">
-                                                @foreach($category->sub_categories as $sub_category)
-                                                    <option value="{{ $sub_category->id }}" {{ old('category') == $sub_category->id ? 'selected': '' }}>{{ $sub_category->category_name }}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select class="form-control select2" name="country">
-                                    <option value="">@lang('app.select_a_country')</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{ $country->id }}" {{ request('country') == $country->id ? 'selected' :'' }}>{{ $country->country_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select class="form-control select2" id="state_select" name="state">
-                                    <option value=""> @lang('app.select_state') </option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn theme-btn"> <i class="fa fa-search"></i> Search Ads</button>
-                        </form>
-
                     </div>
                     <div class="clearfix"></div>
-                </div>
+                 </div>
+                 
 
-                @if($enable_monetize)
-                    {!! get_option('monetize_code_below_search_bar') !!}
-                @endif
+            
+
 
             </div>
         </div>
-    </div>
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header bg-white">
-                    <div class="icon">
-                        <i class="fa fa-folder-open-o"></i>
-                    </div>
-                    <div class="section-header-text">
-                        <h4>@lang('app.categories')</h4>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
-        <div class="row">
-            @foreach($top_categories as $category)
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <div class="category-item category-single-box bg-white {{ $category->color_class }}">
-                        <h4 class="green">
-                            <a href="{{ route('listing') }}?category={{$category->id}}">
-                                <i class="fa {{ $category->fa_icon }}"></i>
-                                <span class="category-name">{{ $category->category_name }} </span>
-                            </a>
-                        </h4>
-                        <hr />
-                        <p class="count text-muted">({{ number_format($category->product_count) }})</p>
-                        <p class="intro"> {{ $category->description }} </p>
-                    </div>
-                </div>
-            @endforeach
-
-        </div>
-    </div>
-
-
-    @if($enable_monetize)
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {!! get_option('monetize_code_below_categories') !!}
-                </div>
-            </div>
-        </div>
-    @endif
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-header bg-white">
-                    <div class="icon">
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <div class="section-header-text">
-                        <h4 class="pull-left">@lang('app.new_premium_ads') </h4>
-                        <a href="{{ route('listing') }}" class="btn pull-right">@lang('app.all_ads')</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
+        <br><br><br><br><br>
+        <!-- About Us -->
     </div>
 
     <div class="container">
-        <div class="row">
+    <br>
+    <h2 style="text-align:center;font-weight:bold;color:black" >ABOUT US</h2>
+    <p style="text-align:center;color:black">51 Capital is a platform for the next generation of investors exploring how cryptocurrencies and digital assets are contributing to the evolution of the global financial system. Its mandate is to inform, educate, and connect the global investment community through news, data, events and education.</p>
+    
+    </p>
+    </br>
+    <h3 style="text-align:left;font-weight:bold;color:black" >51CAPITAL PESSACOIN</h3>
+    
+<ul style="color:black; display:inline-block;font-size:16px;list-style-type:disc">
+<li>100 PessaToken will be equivalent of 1 pessacoin</li>
+<li>PessaToken will work to the advantage of stakeholders.</li>
+<li>PessaToken will support funding Binary accounts.</li>
+<li>PessaToken will be affordable with benchmark rate of $0.5 per Token.</li>
+<li>PessaToken will be friendly among other platform, Mpesa.</li>
+</p>
+<ul><a href="" class="btn btn-info btn-lg" style="margin-top:20px">DISCOVER MORE</a></ul>
+</ul>
 
-            @foreach($premium_ads as $ad)
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+<!-- image -->
+<img class="avia_image" src="https://51capitalcrypto.com/old1/wp-content/uploads/2020/06/faviconpesacoin-287x300.png" alt="" title="pessacoin" height="250" width="250" itemprop="thumbnailUrl" style="margin-left:350px;margin-top:-150px">
+</div>
+<!-- Trading with pessacoin div -->
+<div class="container" style="background-color:#000000;width:100%">
 
-                    <div itemscope itemtype="http://schema.org/Product" class="ads-item-thumbnail ad-box-{{$ad->price_plan}}">
-                        <div class="ads-thumbnail">
-                            <a href="{{ route('single_ad', $ad->slug) }}">
-                                <img itemprop="image"  src="{{ media_url($ad->feature_img) }}" class="img-responsive" alt="{{ $ad->title }}">
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{{ route('single_ad', $ad->slug) }}" title="{{ $ad->title }}"><span itemprop="name">{{ str_limit($ad->title, 40) }} </span></a></h4>
-                            <a class="price text-muted" href="{{ route('listing', ['category' => $ad->category->id]) }}"> <i class="fa fa-folder-o"></i> {{ $ad->category->category_name }} </a>
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<div class="avia_textblock  av_inherit_color " style="color:#ffffff; " itemprop="text"><br>
+<strong><h2 style="text-align: center;">WHY ONE NEEDS TO TRADE WITH PESSACOIN</h2></strong>
+<h4 style="text-align: center;">There are endless reasons to secure PessaCoins but in a nutshell, everyone seeks:</h4>
+<br>
+</div></section>
 
-                            @if($ad->city)
-                            <a class="location text-muted" href="{{ route('listing', ['city' => $ad->city->id]) }}"> <i class="fa fa-location-arrow"></i> {{ $ad->city->city_name }} </a>
-                            @endif
-                            <p class="date-posted text-muted"> <i class="fa fa-clock-o"></i> {{ $ad->created_at->diffForHumans() }}</p>
-                            <p class="price"> <span itemprop="price" content="{{$ad->price}}"> {{ themeqx_price_ng($ad) }} </span></p>
-                            <link itemprop="availability" href="http://schema.org/InStock" />
-                        </div>
+<!-- Trading with pessacoin div -->
+<style>
+* {
+  box-sizing: border-box;
+}
 
-                        @if($ad->price_plan == 'premium')
-                            <div class="label-premium" data-toggle="tooltip" data-placement="top" title="{{ ucfirst($ad->price_plan) }} ad"><i class="fa fa-star-o"></i> </div>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 500px; /* Should be removed. Only for demonstration */
+}
 
-        </div>
-    </div>
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div class="row">
+  <div class="column" style="background-color:#000000;color:black;font-size:14px;text-align:center;color:#ffffff">
+    <h4>AFFORDABILITY</h4>
+    <p>The Coins can be bought at the least benchmark rate, which is $0.5 per token. 100 token will be equivalent to 1 PessaCoin. cheaper than the ever-changing Bitcoin rate that has been in use all along for Binary.</p>
+  </div>
+  <div class="column" style="background-color:#000000;color:black;font-size:14px;text-align:center;color:#ffffff">
+    <h4>PROFITABILITY</h4>
+    <p>Pesacoin trading will be like any other crypto trading. Exchange rates will be available online and one can monitor pricing and trade accordigly. This market will be totally depending on demand and supply basis.</p>
+  </div>
+  <div class="column" style="background-color:#000000;color:black;font-size:14px;text-align:center;color:#ffffff">
+    <h4>EFFICIENCY</h4>
+    <p>The PesaCoin is efficient in that it can trade with all other currencies from Ksh, $, Bitcoin and Ethereum to list but a few.</p>
+  </div>
+</div>
+<!-- end div -->
+
+</div>
 
 
-    @if($enable_monetize)
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {!! get_option('monetize_code_below_premium_ads') !!}
-                </div>
-            </div>
-        </div>
-    @endif
+<div class="container" >
+<div class="avia_textblock  " style="font-size:18px;color:black;margin-bottom:30px" itemprop="text"><h2 style="text-align: center">How to Get Started</h2>
+<p style="text-align: center;color:black">The trade process from the creation of the user account to having pessacoins in your wallet takes only a few minutes.</p>
+</div>
+
+<!-- How to get started div -->
 
 
-    @if($regular_ads->count() > 0)
+<style>
+* {
+  box-sizing: border-box;
+}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-header bg-white">
-                        <div class="icon">
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <div class="section-header-text">
-                            <h4 class="pull-left">@lang('app.new_regular_ads') </h4>
-                            <a href="{{ route('listing') }}" class="btn pull-right">@lang('app.all_ads')</a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 200px; 
+}
 
-        <div class="container">
-            <div class="row">
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
 
-                @foreach($regular_ads as $ad)
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <div itemscope itemtype="http://schema.org/Product" class="ads-item-thumbnail ad-box-{{$ad->price_plan}}">
-                            <div class="ads-thumbnail">
-                                <a href="{{ route('single_ad', $ad->slug) }}">
-                                    <img itemprop="image"  src="{{ media_url($ad->feature_img) }}" class="img-responsive" alt="{{ $ad->title }}">
-                                </a>
-                            </div>
-                            <div class="caption">
-                                <h4><a href="{{ route('single_ad', $ad->slug) }}" title="{{ $ad->title }}"><span itemprop="name">{{ str_limit($ad->title, 40) }} </span></a></h4>
-                                <a class="price text-muted" href="{{ route('listing', ['category' => $ad->category->id]) }}"> <i class="fa fa-folder-o"></i> {{ $ad->category->category_name }} </a>
-                                @if($ad->city)
-                                <a class="location text-muted" href="{{ route('listing', ['city' => $ad->city->id]) }}"> <i class="fa fa-location-arrow"></i> {{ $ad->city->city_name }} </a>
-                                @endif
+<div class="row" style="margin-top:-2px">
+  <div class="column" style="background-color:#ffffff;color:#775300;font-size:15px;text-align:center">
+  
+    <h3>Create Account</h3>
+    <p style="color:black"> Register to 51capitalcrypto.com and  gain access to be a member</p>
+  </div>
+  <div class="column" style="background-color:#ffffff;color:#775300;font-size:15px;text-align:center">
+    <h3>Buy Pessatokens</h3>
+    <p style="color:black">Make deposit amount to your wallet, its simple and secure</p>
+  </div>
+  <div class="column" style="background-color:#ffffff;color:#775300;font-size:15px;text-align:center">
+    <h3>Exchange Pessatokens</h3>
+    <p style="color:black">Earn 1% of your deposit amount each day. Exchange token to other currencies.</p>
+  </div>
+</div>
+</div>
+<!-- end div -->
 
-                                <p class="date-posted text-muted"> <i class="fa fa-clock-o"></i> {{ $ad->created_at->diffForHumans() }}</p>
-                                <p class="price"> <span itemprop="price" content="{{$ad->price}}"> {{ themeqx_price_ng($ad) }} </span></p>
-                                <link itemprop="availability" href="http://schema.org/InStock" />
-                            </div>
 
-                            @if($ad->price_plan == 'premium')
-                                <div class="label-premium" data-toggle="tooltip" data-placement="top" title="{{ ucfirst($ad->price_plan) }} ad"><i class="fa fa-star-o"></i> </div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
+<!-- Sign in-->
+<div style="background-color:#775300">
+<div class="flex_column av_one_half  flex_column_div first  avia-builder-el-35  el_before_av_one_half  avia-builder-el-first" 
+style="border-width:1px; border-style:solid;  box-shadow: 5px 5px 5px 5px #ffffff; padding:5px; border-radius:10px;width: 550px;height:150px;display:inline-block;margin-left: 50px;margin-top: 100px;margin-bottom:100px ">
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<div class="avia_textblock  " style="font-size:16px;color:#ffffff " itemprop="text">
+<h2 style="text-align: center;font-size:30px">SIGN IN</h2>
+<p style="text-align: center;font-size:19px">Access the cryptocurrency you deserve</p>
+</div></section>
+<div class="avia-button-wrap avia-button-center  avia-builder-el-37  el_after_av_textblock  avia-builder-el-last " style="text-align:center">
+<a href="{{ route('login') }}" class="avia-button   avia-icon_select-no avia-color-theme-color avia-size-large avia-position-center" style="font-size: 14px;color:#ffffff">
+<span class="avia_iconbox_title">SIGN IN</span></a></div></div>
 
-            </div>
-        </div>
-    @endif
 
-    @if($enable_monetize)
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {!! get_option('monetize_code_below_regular_ads') !!}
-                </div>
-            </div>
-        </div>
-    @endif
-    @if(get_option('show_latest_blog_in_homepage') ==1)
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-header bg-white">
-                        <div class="icon">
-                            <i class="fa fa-rss"></i>
-                        </div>
-                        <div class="section-header-text">
-                            <h4 class="pull-left">@lang('app.latest_post_from_blog') </h4>
-                            <a href="{{ route('blog') }}" class="btn pull-right">@lang('app.blog')</a>
-
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="home-latest-blog">
-                    @foreach($posts as $post)
-                        <div id="blog-listing" class="col-sm-6 col-xs-12">
-                            <section class="post">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="image">
-                                            <a href="{{ route('blog_single', $post->slug) }}">
-                                                @if($post->feature_img)
-                                                    <img class="img-responsive" alt="{{ $post->title }}" src="{{ media_url($post->feature_img) }}">
-                                                @else
-                                                    <img class="img-responsive" alt="{{ $post->title }}" src="{{ asset('uploads/placeholder.png') }}">
-                                                @endif
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h2><a href="{{ route('blog_single', $post->slug) }}" class="blog-title">{{ $post->title }}</a></h2>
-                                        <div class="clearfix">
-                                            @if($post->author)
-                                                <p class="author-category">By <a href="{{ route('author_blog_posts', $post->author->id) }}">{{ $post->author->name }}</a></p>
-                                            @endif
-                                            <p class="date-comments">
-                                                <i class="fa fa-calendar"></i> {{ $post->created_at_datetime() }}
-                                            </p>
-                                        </div>
-                                        <p class="intro"> {{ str_limit(strip_tags($post->post_content), 120) }} <a href="{{ route('blog_single', $post->slug) }}" >@lang('app.continue_reading')</a></p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </section>
-
-                        </div>
-                    @endforeach
-                    <div class="clearfix"></div>
-                </div>
-
-            </div>
-        </div>
-
-    @endif
+ <!-- register -->
+<div class="flex_column av_one_half  flex_column_div first  avia-builder-el-35  el_before_av_one_half  avia-builder-el-first"
+style="border-width:1px; border-style:solid;  box-shadow: 5px 5px 5px 5px #ffffff; padding:5px; border-radius:10px;width: 550px;height:150px;display:inline-block;margin-left: 130px;color:#ffffff ">
+<section class="av_textblock_section " itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<div class="avia_textblock  " style="font-size:16px; " itemprop="text">
+<h2 style="text-align: center;font-size:30px">REGISTER</h2>
+<p style="text-align: center;font-size:19px">Join the new era of cryptocurrency exchange</p>
+</div></section>
+<div class="avia-button-wrap avia-button-center  avia-builder-el-37  el_after_av_textblock  avia-builder-el-last" style="text-align:center">
+<a href="{{ route('user.create') }}"  class="avia-button   avia-icon_select-no avia-color-theme-color avia-size-large avia-position-center" style="font-size: 14px;color:#ffffff;">
+<span class="avia_iconbox_title">SIGN UP</span></a></div></div>
+</div>
 
 @endsection
 
-@section('page-js')
 
+@section('page-js')
     <script>
         function generate_option_from_json(jsonData, fromLoad){
             //Load Category Json Data To Brand Select
